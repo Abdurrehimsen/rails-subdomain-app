@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @blog.name %>
+</p>
+
+<p>
+  <strong>Subdomain:</strong>
+  <%= @blog.subdomain %>
+</p>
+
+<h1><%= @blog.name %></h1>
+	<hr />
+	<% @posts.each do |post| %>
+
+	<h3><%= post.title %></h3>
+	<p><%= truncate post.body, length: 160 %></p>
+	<%= link_to "Read More", post %>
+<% end %>
+
+<%= link_to 'Edit', edit_blog_path(@blog) %> |
+<%= link_to 'Back', blogs_path %>
