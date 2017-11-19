@@ -72,4 +72,44 @@ rails db:seed
 -- Start server and go to http://www.vcap.me:3000 adrress
 
 
-multi tenancy will be soon - multi tenancy yakında yapılacak.
+multi tenancy:
+
+Add gem 'apartment' (gemi ekleyin)
+
+execute line below (Aşağıdaki satırı gerçekleyi)
+
+bundle exec rails generate apartment:install
+
+This will create a config/initializers/apartment.rb initializer file (yandaki dosya oluşacak)
+
+add line below to aparment.rb (aşağıdaki satırı dosyaya ekleyin)
+
+require 'apartment/elevators/subdomain' and edit two lines below in the same file
+
+config.excluded_models = %w{ Blog }
+config.tenant_names = lambda { Blog.pluck :subdomain }
+
+Your post model will seem like this (post modeli aşağıdaki gibi olmalı)
+
+class Blog < ApplicationRecord
+  after_create :create_tenant
+  has_many :posts
+
+  private
+  
+  def create_tenant
+    Apartment::Tenant.create(subdomain)
+    end
+
+end
+
+in application.rb add lines below (aşağıdaki satırı dosyaya ekleyin)
+
+first require 'apartment/elevators/subdomain' (ilk olarak bunu ekleyin)
+
+then inside class Application < Rails::Application block (yandaki sınıfın içine bunları ekleyin)
+
+config.middleware.use Apartment::Elevators::Subdomain
+Apartment::Elevators::Subdomain.excluded_subdomains = ['www']
+
+and you are done :)
