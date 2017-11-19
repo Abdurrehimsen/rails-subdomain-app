@@ -47,7 +47,7 @@ change line in index.html.erb like below (aşağıdaki satırları değiştirin)
 - <td><%= link_to 'Show', root_url(subdomain: blog.subdomain) %></td>
 ```
 add lines below to blog's show.html.erb above buttons (aşağıdaki satırları ekleyin)
-```
+```html
 <h1><%= @blog.name %></h1>
 	<hr />
 	<% @posts.each do |post| %>
@@ -56,7 +56,7 @@ add lines below to blog's show.html.erb above buttons (aşağıdaki satırları 
 	<p><%= truncate post.body, length: 160 %></p>
 	<%= link_to "Read More", post %>
 <% end %>
-	```
+```
 
 add lines below to seeds.rb (aşağıdaki satırları ekleyin)
 ```ruby
@@ -64,12 +64,6 @@ Blog.delete_all
 Blog.create(id: 1, name: "My Example Blog", subdomain: "ornek")
 Blog.create(id: 2, name: "Awesome Blog", subdomain: "awesome")
 
-
-Post.delete_all
-Post.create(id: 1, blog_id: 1, title: "An Example of a Post", body: "This is a perfect example of a blog post.  Feel free to reference this example in your other applications.  Note that the author of this blog post does not accept responsibility for the contents of this blog post.")
-Post.create(id: 2, blog_id: 1, title: "Another Example of a Post", body: "This is yet another example of a blog post.  This one is less perfect than the first one.")
-Post.create(id: 3, blog_id: 2, title: "An Utterly Awesome Post", body: "This is a super awesome example of a really good blog post.  You should...like...totally copy this!")
-Post.create(id: 4, blog_id: 2, title: "Yet Another Utterly Post", body: "This is yet ANOTHER example of a super awesome blog post.  You should totally copy this one as well!")
 ```
 
 
@@ -120,6 +114,6 @@ then inside class Application < Rails::Application block (yandaki sınıfın iç
 ```ruby
 config.middleware.use Apartment::Elevators::Subdomain
 Apartment::Elevators::Subdomain.excluded_subdomains = ['www']
-
-and you are done :)
 ```
+and you are done :)
+
