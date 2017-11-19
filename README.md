@@ -5,8 +5,9 @@ rails g model Post title body:text blog:references
 rake db:migrate
 
 toggle line below to comment in controller(aşağıdaki satırı yorum satırı yapın)
-
-- before_action :set_blog, only: [:edit, :update, :destroy] 
+'''ruby
+before_action :set_blog, only: [:edit, :update, :destroy] 
+'''
 
 add line below to blog.rb
 - has_many :posts
